@@ -1,11 +1,12 @@
 #!/usr/bin/env node
+var fs = require('fs'),
+    path = require('path');
 
 module.exports = function (context) {
-    var fs = context.requireCordovaModule('fs'),
-        path = context.requireCordovaModule('path'),
-        platformRoot = path.join(context.opts.projectRoot, 'platforms/android'),
+    var platformRoot = path.join(context.opts.projectRoot, 'platforms/android'),
         manifestFile = path.join(platformRoot, 'AndroidManifest.xml');
-    function processManifest(manifestFile){
+
+    function processManifest(manifestFile) {
         fs.readFile(manifestFile, 'utf8', function (err, data) {
             if (err) {
                 throw new Error('Unable to find AndroidManifest.xml: ' + err);
@@ -23,6 +24,7 @@ module.exports = function (context) {
             })
         });
     }
+
     if (fs.existsSync(manifestFile)) {
         processManifest(manifestFile);
     } else {
